@@ -10,10 +10,20 @@ class Portfoilo():
         self.stocks = pd.DataFrame(columns=['stock_name','stock_code','VaR', 'Corr'])
 
     def add_stock_to_pf(self, stock_name, stock_code):
-        self.stocks
-        return
+        self.stocks.append({'stock_name': stock_name,\
+                            'stock_code': stock_code,\
+                            'VaR':-1,\
+                            'Corr':-1},\
+                            ignore_index=True)
+
     def del_stock_from_pf(self, stock_code):
-        return
+        pf =self.stocks
+        pf.drop(pf[pf['stock_code']==stock_code].index, inplace=True)
+        
+    def view_pf(self):
+        print("--information details in this portfolio.")
+        print(self.stocks)
+        
 
 
 class Analysis(Portfoilo):
