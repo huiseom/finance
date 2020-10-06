@@ -1,6 +1,7 @@
 from portfolio import Portfoilo 
 
 def main_cmd_list():
+    print("")
     print("--exit: terminate the program")
     print("--create: create a new portfolio")
     print("--manage: deal with the given number of portfolio")
@@ -8,8 +9,8 @@ def main_cmd_list():
     
 def inner_cmd_list():
     print("")
-    print("--add: add a stock to given portfolio")
-    print("--del: delete a stock from given portfolio")
+    print("--add: add a stock to given portfolio(stock name/code are required)")
+    print("--del: delete a stock from given portfolio(stock code are required)")
     print("--view: show all of the stocks in current portfolio")
     print("--quit: escape from managing mode")
 
@@ -24,6 +25,7 @@ def loop_for_each_pf(pf):
         cmd = input("Enter a command:")
 
         if cmd == 'quit':
+            main_cmd_list()
             break
         elif cmd == 'add':
             stock_code = input("Enter a stock code:")
@@ -36,7 +38,12 @@ def loop_for_each_pf(pf):
             pf.view_pf()
         else:
             print("invalid command!")
-            
+
+def find_pf(pfs, pf_name):
+    for pf in pfs:
+        if pf['name'] == pf_name:
+            return pf
+    return None
 
 def cui_main():
     cmd = None
@@ -60,9 +67,12 @@ def cui_main():
             pf_nums +=1
 
         elif cmd =='manage':
-            pf_idx = input("Enter a portfolio number: ")
-            if pf_idx.isdigit():
-                loop_for_each_pf(portfolios[pf_idx])
+            pf_name = input("Enter a portfolio name: ")
+            pf_manage = find_pf(portfolios, pf_name=pf_name)
+            if pf_manage:
+                loop_for_each_pf(pf_manage)
+            else:
+                print("There is no matching portfolio name with {}".format(pf_name))
             
 
         elif cmd == 'status':
