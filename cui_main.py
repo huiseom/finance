@@ -42,7 +42,7 @@ def loop_for_each_pf(pf):
 def find_pf(pfs, pf_name):
     for pf in pfs:
         if pf['name'] == pf_name:
-            return pf
+            return pf['pf']
     return None
 
 def cui_main():
@@ -73,7 +73,6 @@ def cui_main():
                 loop_for_each_pf(pf_manage)
             else:
                 print("There is no matching portfolio name with {}".format(pf_name))
-            
 
         elif cmd == 'status':
             print("There are {} portfolios".format(pf_nums))

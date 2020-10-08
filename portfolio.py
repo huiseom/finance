@@ -3,18 +3,28 @@ import numpy as np
 import datetime as dt
 import itertools
 import FinanceDataReader as fdr
+from tabulate import tabulate
 from pandas_datareader import data as pdr
 
 class Portfoilo():
     def __init__(self):
         self.stocks = pd.DataFrame(columns=['stock_name','stock_code','VaR', 'Corr'])
+    
+    def __is_valid_code(self, stock_code):
+        if len(stock_code) !=6 or stock_code.isdigit == False:
+            return False
+        else:
+            return True
 
     def add_stock_to_pf(self, stock_name, stock_code):
-        self.stocks.append({'stock_name': stock_name,\
-                            'stock_code': stock_code,\
-                            'VaR':-1,\
-                            'Corr':-1},\
-                            ignore_index=True)
+        if self.__is_valid_code(stock_code=stock_code):
+            self.stocks = self.stocks.append({'stock_name': stock_name,\
+                                'stock_code': stock_code,\
+                                'VaR':-1,\
+                                'Corr':-1},\
+                                ignore_index=True)
+        else:
+            print("Invalid stock code!!")
 
     def del_stock_from_pf(self, stock_code):
         pf =self.stocks
@@ -22,7 +32,8 @@ class Portfoilo():
         
     def view_pf(self):
         print("--information details in this portfolio.")
-        print(self.stocks)
+        print(tabulate(self.stocks, headers='keys', tablefmt='psql'))
+            
         
 
 
